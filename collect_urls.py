@@ -2,6 +2,7 @@ import argparse
 import random
 import requests
 import os
+import time
 
 import pandas as pd
 from openpyxl import load_workbook
@@ -70,13 +71,14 @@ def main(args):
     #  creating session to check validity of url
     session = requests.Session()
     num_set = set()  # set to avoid duplication of url
-    random.seed(args.seed)      # setting seed so that each time program gives same result
+    #random.seed(args.seed)      # setting seed so that each time program gives same sequence of numbers
 
     while len(num_set) < args.max_urls:
         num, url = generate_url(args.start, args.stop)
         if num not in num_set:
-            status_code = session.get(url, headers={'User-Agent': 'Mozilla/5.0'}).status_code
-            if status_code == 200:  # check if url is valid
+            status_code = session.get(url, timeout=5,  headers={'User-Agent': 'Mozilla/5.0'}).status_code
+            time.sleep(1)   # Waits for 1 sec after it hits the server to check url status
+            if status_code == 200:  # checks if url is valid
                 print(url)
                 num_set.add(num)
                 save_to_excel(num, url, args.filename, args.sheetname)
