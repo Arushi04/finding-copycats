@@ -87,7 +87,7 @@ def check_status(url):
 
     wishlist_fav_status, soup = check_wishlist_fav(url)
     if wishlist_fav_status == True:
-        follower_status = check_followers_count(url, soup)
+        follower_status = check_followers_count(soup)
         if follower_status == True:
             status = 1
         else:
