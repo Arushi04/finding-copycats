@@ -1,7 +1,7 @@
 # Web scraping and Automation scripts
 
 
-### Scripts (all the scripts under scripts folder) :
+### Scripts :
 
 **1. [collect_urls.py](scripts/collect_urls.py) :** This script creates unique url, checks whether the url is valid and if valid stores it in an excel file.
 
