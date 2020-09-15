@@ -3,7 +3,7 @@
 
 ### Scripts (all the scripts under scripts folder) :
 
-**1. collect_urls.py  :** This script creates unique url, checks whether the url is valid and if valid stores it in an excel file.
+**1. [collect_urls.py](scripts/collect_urls.py) :** This script creates unique url, checks whether the url is valid and if valid stores it in an excel file.
 
 __Command to run :__       
 python collect_urls.py \
@@ -13,7 +13,7 @@ python collect_urls.py \
 --filename urls.csv
 
 
-**2. check_url_status.py  :** This script checks if the user has anything in their wishlist and favorites. If yes, it checks if the user has followers and following than default and writes it to an excel file.
+**2. [check_url_status.py](scripts/check_url_status.py)  :** This script checks if the user has anything in their wishlist and favorites. If yes, it checks if the user has followers and following than default and writes it to an excel file.
 
 __Command to run :__        
 python check_url_status.py \
@@ -21,7 +21,7 @@ python check_url_status.py \
 --outputfile "out_valid_urls.xlsx"
 
 
-**3. translate_itemdescription.py  :** This script translates the item description to English and extracts year and season from that.
+**3. [translate_itemdescription.py](scripts/translate_itemdescription.py)  :** This script translates the item description to English and extracts year and season from that.
 
 __Command to run :__        
 python translate_itemdescription.py \
