@@ -28,3 +28,9 @@ python translate_itemdescription.py \
 --inputfile ProductInfo.csv 
 --outputfile modified_productInfo.csv 
 --logfile product_info.log
+
+
+**4. [scrape_designer_details.ipynb](/scrape_designer_details.ipynb)  :** This script takes the root url and scrapes Name, website, contact and location for each designer using Beautiful Soup.
+
+
+**5. [scrape_product_details.ipynb](/scrape_product_details.ipynb)  :** This script takes the website url of the designer as input, scrapes the website and save the product details like Designer Name, Product name, Year of designing, total images associated with it and product description. It also downloads all the product images in respective folders. This scripts uses Selenium and Beautiful Soup for the crawling.
