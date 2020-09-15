@@ -15,7 +15,7 @@ def get_year(x):
         if token[0].isdigit() and token[-1].isdigit():
             years.append(token)
 
-    years = [y for y in years if len(y) == 4 and int(y) > 1800 and int(y) < 3000]
+    years = [y for y in years if len(y) == 4 and int(y) > 1900 and int(y) < 2025]
     if len(years) == 0:
         return np.NaN
     return ", ".join(years)
@@ -24,8 +24,9 @@ def get_year(x):
 def get_season(x):
     '''
     This function takes item description column as input and return the seasons
+    Spring / Summer, Fall / Winter, Resort, and Pre - Fall
     '''
-    #Spring / Summer, Fall / Winter, Resort, and Pre - Fall
+
 
     keywords = keywords = ["spring", "summer", "fall", "winter", "fw", "ss", "pre-fall", "pre-spring", "autumn", "resort"]
     x = x.lower()
