@@ -1,53 +1,59 @@
 import argparse
 import logging
 import pandas as pd
-import numpy as np
 import re
 
+from langdetect import detect
+from ibm_watson import LanguageTranslatorV3
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
-def get_year(x):
-    '''
-    This function takes item description column as input and return the year/years from that
-    '''
-    years = []
-    tokens = re.findall(r'[0-9]+', x)
-    for token in tokens:
-        if token[0].isdigit() and token[-1].isdigit():
-            years.append(token)
+# connecting to IBM cloud services for translation
 
-    years = [y for y in years if len(y) == 4 and int(y) > 1900 and int(y) < 2025]
-    if len(years) == 0:
-        return np.NaN
-    return ", ".join(years)
+authenticator = IAMAuthenticator('6RP7liuRDwJy6KYOsl9e7bNcBfocZp2pdgn97CF8ZJsT')  #provide your own IBM cloud API key
+language_translator = LanguageTranslatorV3(version='2018-05-01', authenticator=authenticator)
+language_translator.set_service_url('https://api.us-south.language-translator.watson.cloud.ibm.com/instances/2b8fa6b6-408f-4edc-bf24-4343f5e07f5e')
 
 
-def get_season(x):
-    '''
-    This function takes item description column as input and return the seasons
-    Spring / Summer, Fall / Winter, Resort, and Pre - Fall
-    '''
+def deEmojify(text):
+    regrex_pattern = re.compile(pattern = "["
+        u"\U0001F600-\U0001F64F"  # emoticons
+        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           "]+", flags = re.UNICODE)
+    return regrex_pattern.sub(r'',text.strip())
 
 
-    keywords = keywords = ["spring", "summer", "fall", "winter", "fw", "ss", "pre-fall", "pre-spring", "autumn", "resort"]
-    x = x.lower()
-    seasons = [token for token in x.split() if token in keywords]
-    tokens = re.findall(r'[a-z]+', x)
-    seasons += [token for token in tokens if token in keywords]
+def detect_lang(x):
+    return detect(x)
 
-    if len(seasons) == 0:
-        return np.NaN
 
-    seasons = ", ".join(list(set(seasons)))
-    return seasons
+def translate_lang(x, lang):
+    try:
+        if lang == "en" or len(x) == 0:  # check for english and skip the translation
+            return x
+    except Exception as e:
+        print(str(e))
+
+    try:
+        translation = language_translator.translate(text=x, model_id=lang + '-en').get_result()
+        translated = translation['translations'][0]['translation']
+        return translated
+    except Exception as e:
+        logging.info("Exception caught : ", str(e))
+        return x
 
 
 def main(args):
     data = pd.read_csv(args.inputfile)
 
-    data["Year"] = data.item_description.apply(lambda x: get_year(str(x)))
-    data["Specific_season"] = data.item_description.apply(lambda x: get_season(str(x)))
+    data["language"] = data.item_description.apply(lambda x: detect_lang(str(x)))
+    data["clean_text"] = data.item_description.apply(lambda x: deEmojify(str(x)))
+    data["item_desc_tr"] = data.apply(lambda x: translate_lang(x.clean_text, x.language), axis=1)
 
-    data.to_csv(args.outputfile, index=False)      # writing to csv
+    data = data.drop(['language', 'clean_text'], axis=1)
+
+    data.to_csv(args.outputfile, index=False)      # writing the translated file to csv
 
 
 if __name__ == '__main__':
