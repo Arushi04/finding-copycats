@@ -33,7 +33,7 @@ __Requirements and Installation Steps:__
 1. Install language detection API : conda install -c conda-forge langdetect
 1. Install Watson API using command: pip install --upgrade "ibm-watson>=4.6.0"    
 2. Create an account at https://cloud.ibm.com/  
-3. Use the API key generated for the script authentication.
+3. Use the API key generated for the script authentication.     
 __Ref__ : https://cloud.ibm.com/apidocs/language-translator?code=python
 
 
