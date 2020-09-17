@@ -47,7 +47,8 @@ def get_year(x):
     years = [y for y in years if len(y) == 4 and int(y) > 1990 and int(y) < 2025]
     if len(years) == 0:
         return np.NaN
-    return ", ".join(years)
+    return ", ".join(set(years))
+
 
 
 def get_season(x):
