@@ -79,7 +79,7 @@ def main(args):
     data['specific_season'] = data['specific_season'].replace(['fw'], 'fall/winter')
     data['specific_season'] = data['specific_season'].replace(['ss', 's/s'], 'summer/spring')
 
-    data.to_csv(args.outputfile, index=False)      # writing to csv
+    data.to_csv(args.outputfile, index=False, encoding="utf-8-sig")      # writing to csv
 
 
 if __name__ == '__main__':
