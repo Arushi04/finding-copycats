@@ -10,4 +10,11 @@
 **3. [scrape_product_details_dynamic_using_selenium.ipynb](/scrape_product_details_dynamic_using_selenium.ipynb)  :** This script takes the website url of the designer as input, scrapes the website and save the product details like Designer Name, Product name, Year of designing, total images associated with it and product description. It also downloads all the product images in respective folders. This scripts uses Selenium and Beautiful Soup for crawling dynamically rendering webpages.
 
 
+#### Installation Requirement:
+
+1. beautifulsoup4==4.9.1
+2. selenium==3.141.0
+3. requests-html==0.10.0
+4. urllib3
+
 
