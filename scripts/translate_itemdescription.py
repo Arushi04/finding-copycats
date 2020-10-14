@@ -9,7 +9,7 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
 # connecting to IBM cloud services for translation
 
-authenticator = IAMAuthenticator('6RP7liuRDwJy6KYOsl9e7bNcBfocZp2pdgn97CF8ZJsT')  #provide your own IBM cloud API key
+authenticator = IAMAuthenticator('***************')  #provide your own IBM cloud API key
 language_translator = LanguageTranslatorV3(version='2018-05-01', authenticator=authenticator)
 language_translator.set_service_url('https://api.us-south.language-translator.watson.cloud.ibm.com/instances/2b8fa6b6-408f-4edc-bf24-4343f5e07f5e')
 
